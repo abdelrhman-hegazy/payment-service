@@ -1,0 +1,26 @@
+version: "3.8"
+services:
+  payment-service:
+    build: .
+    container_name: payment_service
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: hegazy
+      POSTGRES_PASSWORD: hegazypass
+      POSTGRES_DB: payment
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+volumes:
+  pg_data:
